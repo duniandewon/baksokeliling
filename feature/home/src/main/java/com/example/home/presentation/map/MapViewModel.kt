@@ -1,12 +1,18 @@
 package com.example.home.presentation.map
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.home.domain.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,21 +21,21 @@ class MapViewModel @Inject constructor(private val logoutUseCase: LogoutUseCase)
     private val _uiState = MutableStateFlow<MapUiState>(MapUiState.Map())
     val uiState: StateFlow<MapUiState> = _uiState
 
-    fun onEvent(uiEvent: MapUiEvent) {
-        when (uiEvent) {
-            MapUiEvent.Logout -> {
-                lgoOut()
-            }
+    val visiblePermissionDialogQueue = mutableStateListOf<String>()
 
-            else -> {
-                Unit
-            }
+    fun onPermissionResult(isGranted: Boolean, permission: String) {
+        if (!isGranted && !visiblePermissionDialogQueue.contains(permission)) {
+            visiblePermissionDialogQueue.add(permission)
+        } else {
+            // TODO: fetch users location data
         }
     }
 
+    fun dismissLocationPermissionDialog() {
+        visiblePermissionDialogQueue.removeFirst()
+    }
+
     private fun lgoOut() = viewModelScope.launch {
-        val ui = (_uiState.value as MapUiState.Map) ?: return@launch
         logoutUseCase.invoke()
-        _uiState.value = MapUiState.HasLoggedOut
     }
 }

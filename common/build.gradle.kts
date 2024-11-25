@@ -17,7 +17,16 @@ dependencies {
     implementation(projects.network)
 
     implementation(libs.core.ktx)
-
+    implementation(libs.appcompat)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.activity.compose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    debugImplementation(libs.ui.tooling)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.material3)
 
     implementation(libs.ktor.serialization)
     implementation(libs.hilt)

@@ -31,9 +31,10 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation(libs.ktor.serialization)
-    implementation(libs.hilt)
 
+    implementation(libs.ktor.serialization)
+
+    implementation(libs.hilt)
     implementation(libs.androidx.hilt.compose.navigation)
     kapt(libs.hilt.compiler)
 
