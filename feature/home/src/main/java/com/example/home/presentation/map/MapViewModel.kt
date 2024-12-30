@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.home.domain.model.UserLocation
 import com.example.home.domain.usecase.GetUserLocationUpdatesUseCase
+import com.example.home.domain.usecase.GetUserLocationUseCase
 import com.example.home.domain.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel()
 class MapViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
-    private val useLocationUpdateUseCase: GetUserLocationUpdatesUseCase
+    private val useLocationUpdateUseCase: GetUserLocationUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<MapUiState>(MapUiState.Map())
     val uiState: StateFlow<MapUiState> = _uiState
@@ -35,8 +36,9 @@ class MapViewModel @Inject constructor(
         visiblePermissionDialogQueue.removeAt(0)
     }
 
-    private fun lgoOut() = viewModelScope.launch {
+    private fun logoOut() = viewModelScope.launch {
         logoutUseCase.invoke()
+        _uiState.value = MapUiState.HasLoggedOut
     }
 
     private fun getMyLastKnownLocation() {
@@ -57,6 +59,10 @@ class MapViewModel @Inject constructor(
 
             is MapUiEvent.GetLocationsData -> {
                 getMyLastKnownLocation()
+            }
+
+            is MapUiEvent.Logout -> {
+                logoOut()
             }
 
             else -> {}

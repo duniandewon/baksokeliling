@@ -71,6 +71,12 @@ fun MapScreen(viewModel: MapViewModel, onLogout: () -> Unit) {
     }
 
     when (val state = uiState.value) {
+        is MapUiState.HasLoggedOut -> {
+            LaunchedEffect(Unit) {
+                onLogout()
+            }
+        }
+
         is MapUiState.GetLocationPermission -> {
             LaunchedEffect(Unit) {
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -112,7 +118,7 @@ fun MapContent(onEvent: (MapUiEvent) -> Unit, uiState: MapUiState.Map) {
 
     val markerState = rememberMarkerState()
 
-    val cameraPositionState = rememberCameraPositionState ()
+    val cameraPositionState = rememberCameraPositionState()
 
     LaunchedEffect(location) {
         markerState.position = location
