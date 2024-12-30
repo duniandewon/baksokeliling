@@ -1,6 +1,6 @@
 [versions]
-agp = "8.2.0"
-kotlin = "1.9.0"
+agp = "8.7.0"
+kotlin = "2.0.0"
 core-ktx = "1.13.1"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.2.1"
@@ -20,6 +20,8 @@ slf4j = "2.0.12"
 com-google-android-material-material = "1.12.0"
 org-jetbrains-kotlin-jvm = "1.9.0"
 datastore = "1.1.1"
+google-maps-compose = "4.3.0"
+play-services-location = "21.3.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -54,8 +56,11 @@ kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutine
 slf4j = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
 material = { group = "com.google.android.material", name = "material", version.ref = "com-google-android-material-material" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+google-maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "google-maps-compose" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "play-services-location" }
 
 [plugins]
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
